@@ -1,0 +1,54 @@
+#include <iostream>
+
+void incrementArrayElements(int* arr, size_t size) {
+    if (arr == nullptr) {
+        std::cerr << "Error: Null pointer passed to incrementArrayElements.\n";
+        return;
+    }
+    
+    for (size_t i = 0; i < size; ++i) {
+        *(arr + i) += 1; // Increment element using pointer arithmetic
+    }
+}
+
+int main() {
+    size_t arraySize;
+
+    // Get the size of the array from the user
+    std::cout << "Enter the size of the array: ";
+    std::cin >> arraySize;
+
+    // Check for valid size
+    if (arraySize == 0) {
+        std::cerr << "Error: Array size must be greater than zero.\n";
+        return 1;
+    }
+
+    // Allocate memory for the array
+    int* arr = new(std::nothrow) int[arraySize];
+    if (arr == nullptr) {
+        std::cerr << "Memory allocation failed!\n";
+        return 1; // Memory allocation failed
+    }
+
+    // Initialize the array
+    for (size_t i = 0; i < arraySize; ++i) {
+        *(arr + i) = i; // Initialize elements to their index value
+    }
+
+    // Increment array elements
+    incrementArrayElements(arr, arraySize);
+
+    // Print the incremented array
+    std::cout << "Incremented array elements: ";
+    for (size_t i = 0; i < arraySize; ++i) {
+        std::cout << *(arr + i) << " "; // Print using pointer arithmetic
+    }
+    std::cout << std::endl;
+
+    // Deallocate memory
+    delete[] arr;
+    arr = nullptr; // Prevent dangling pointer
+
+    return 0;
+}
